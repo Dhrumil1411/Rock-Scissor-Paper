@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { motion } from 'framer-motion';
 
-const socket = io('http://localhost:4000');
+// In production, configure VITE_BACKEND_URL in Render's environment settings.
+const socketUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
+const socket = io(socketUrl);
 
 function App() {
   const [screen, setScreen] = useState('home'); // home, create, join, game, game_over
