@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 // Fallback to index.html for React routing
-app.get('*', (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
