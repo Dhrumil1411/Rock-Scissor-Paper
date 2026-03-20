@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { motion } from 'framer-motion';
 
-// In production, configure VITE_BACKEND_URL in Render's environment settings.
-const socketUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
+// If in dev mode, connect to localhost:4000. In production on Render, connect directly.
+const socketUrl = import.meta.env.PROD ? '/' : 'http://localhost:4000';
 const socket = io(socketUrl);
 
 function App() {

@@ -2,9 +2,18 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 app.use(cors());
+
+// Serve the static frontend build
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+// Fallback to index.html for React routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 const server = http.createServer(app);
 const io = new Server(server, {
