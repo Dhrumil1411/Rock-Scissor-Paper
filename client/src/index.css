@@ -1,0 +1,280 @@
+:root {
+  --bg-color: #0b0c10;
+  --neon-magenta: #ff00ff;
+  --neon-cyan: #00ffff;
+  --neon-yellow: #ffff00;
+  --text-main: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: 'VT323', monospace;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-family: 'Press Start 2P', cursive;
+  text-transform: uppercase;
+  margin: 0.5rem 0;
+}
+
+#root {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* CRT Scanline Overlay */
+.crt::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 999;
+  background-size: 100% 3px, 3px 100%;
+  pointer-events: none;
+}
+
+.crt::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.6) 100%);
+  z-index: 998;
+  pointer-events: none;
+}
+
+/* Glitch Effect */
+.glitch {
+  position: relative;
+  color: var(--neon-cyan);
+  text-shadow: 2px 2px var(--neon-magenta), -2px -2px var(--neon-yellow);
+  animation: glitch-anim 2s infinite;
+}
+
+@keyframes glitch-anim {
+  0% { transform: translate(0) }
+  2% { transform: translate(-2px, 2px) }
+  4% { transform: translate(2px, -2px) }
+  6% { transform: translate(0) }
+  100% { transform: translate(0) }
+}
+
+/* Arcade Button */
+.arcade-btn {
+  background: transparent;
+  color: var(--neon-yellow);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  border: 4px solid var(--neon-yellow);
+  box-shadow: 6px 6px 0px var(--neon-magenta);
+  cursor: pointer;
+  transition: all 0.1s;
+  text-transform: uppercase;
+  margin: 10px;
+}
+.arcade-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: translate(6px, 6px);
+}
+
+.arcade-btn:not(:disabled):active {
+  transform: translate(4px, 4px);
+  box-shadow: 2px 2px 0px var(--neon-magenta);
+}
+
+.arcade-btn:not(:disabled):hover {
+  background: var(--neon-yellow);
+  color: #0b0c10;
+}
+
+.arcade-btn.cyan {
+  color: var(--neon-cyan);
+  border-color: var(--neon-cyan);
+  box-shadow: 6px 6px 0px var(--neon-magenta);
+}
+.arcade-btn.cyan:not(:disabled):hover {
+  background: var(--neon-cyan);
+  color: #0b0c10;
+}
+
+.arcade-btn.magenta {
+  color: var(--neon-magenta);
+  border-color: var(--neon-magenta);
+  box-shadow: 6px 6px 0px var(--neon-cyan);
+}
+.arcade-btn.magenta:not(:disabled):hover {
+  background: var(--neon-magenta);
+  color: #0b0c10;
+}
+
+/* Blinking text */
+.blink {
+  animation: blinker 1.5s linear infinite;
+}
+
+@keyframes blinker {
+  50% { opacity: 0; }
+}
+
+/* Marquee */
+.marquee-container {
+  width: 100vw;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+  border-top: 2px solid var(--neon-cyan);
+  border-bottom: 2px solid var(--neon-cyan);
+  padding: 10px 0;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 255, 255, 0.1);
+}
+.marquee-content {
+  display: inline-block;
+  animation: marquee 15s linear infinite;
+  font-size: 1.5rem;
+  color: var(--neon-cyan);
+}
+@keyframes marquee {
+  0% { transform: translateX(100vw); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Pulsing border */
+.pulse-border {
+  border: 4px solid var(--neon-magenta);
+  box-shadow: 0 0 10px var(--neon-magenta), inset 0 0 10px var(--neon-magenta);
+  animation: pulse 1.5s infinite alternate;
+  padding: 2rem;
+  background: rgba(255, 0, 255, 0.05);
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 5px var(--neon-magenta), inset 0 0 5px var(--neon-magenta); }
+  100% { box-shadow: 0 0 20px var(--neon-magenta), inset 0 0 20px var(--neon-magenta); }
+}
+
+input.arcade-input {
+  background: rgba(0,0,0,0.5);
+  border: 4px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  font-family: 'Press Start 2P', cursive;
+  padding: 1rem;
+  font-size: 1.2rem;
+  outline: none;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+  max-width: 400px;
+  margin: 15px 0;
+}
+
+input.arcade-input::placeholder {
+  color: rgba(0, 255, 255, 0.3);
+}
+
+input.arcade-input:focus {
+  border-color: var(--neon-yellow);
+  box-shadow: 0 0 15px var(--neon-yellow);
+}
+
+.pips-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+}
+.pip {
+  width: 25px;
+  height: 25px;
+  border: 4px solid #fff;
+  transition: all 0.3s ease;
+}
+.pip.win { background-color: var(--neon-cyan); border-color: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan);}
+.pip.lose { background-color: var(--neon-magenta); border-color: var(--neon-magenta); box-shadow: 0 0 10px var(--neon-magenta);}
+.pip.draw { background-color: var(--neon-yellow); border-color: var(--neon-yellow); box-shadow: 0 0 10px var(--neon-yellow); }
+.pip.empty { background-color: transparent; border-color: rgba(255, 255, 255, 0.3); }
+
+/* Layout Utilities */
+.text-center { text-align: center; }
+.flex-col { display: flex; flex-direction: column; align-items: center; }
+.flex-row { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; }
+
+.text-magenta { color: var(--neon-magenta); text-shadow: 0 0 5px var(--neon-magenta); }
+.text-cyan { color: var(--neon-cyan); text-shadow: 0 0 5px var(--neon-cyan); }
+.text-yellow { color: var(--neon-yellow); text-shadow: 0 0 5px var(--neon-yellow); }
+
+.mt-2 { margin-top: 1rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mt-4 { margin-top: 2rem; }
+.mb-4 { margin-bottom: 2rem; }
+.m-4 { margin: 2rem; }
+
+/* Responsive Adjustments */
+@media screen and (max-width: 600px) {
+  h1 { font-size: 2rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  h3 { font-size: 1rem !important; }
+  
+  #root {
+    padding: 10px;
+    margin-top: 60px;
+  }
+  
+  .pulse-border {
+    padding: 1rem;
+    width: 100%;
+    margin: 5px;
+  }
+  
+  .arcade-btn {
+    font-size: 0.8rem;
+    padding: 0.8rem 1rem;
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  input.arcade-input {
+    font-size: 1rem;
+    padding: 0.8rem;
+    max-width: 100%;
+  }
+
+  .marquee-content {
+    font-size: 1rem;
+  }
+  
+  .pips-container .pip {
+    width: 20px;
+    height: 20px;
+  }
+}
